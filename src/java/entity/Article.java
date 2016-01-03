@@ -5,6 +5,7 @@
 package entity;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -35,6 +36,8 @@ public class Article implements Serializable {
     // TIMESTAMP, contrairement à DATE, stocke l'heure en plus du jour/mois/année
     @Temporal(javax.persistence.TemporalType.TIMESTAMP)
     private Date time;
+    
+    private ArrayList<String> images;
 
     /******* Constructeur *******/
     
@@ -47,9 +50,18 @@ public class Article implements Serializable {
         //DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
         //Date date = new Date();
         this.time = new Date();
+        this.images = new ArrayList();
     }
     
     /******************/
+    
+    public void AjouterImage(String nom) {
+        this.images.add(nom);
+    }
+
+    public ArrayList<String> getImages() {
+        return images;
+    }
     
     public String getContent() {
         return content;
