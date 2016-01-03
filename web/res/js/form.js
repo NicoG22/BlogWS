@@ -9,10 +9,6 @@ var url = "/BlogWS2015/resources/files/upload";
 var position;
 var filesUploaded = [];
 
-$(document).ready(function () {
-    $("#map").hide();
-})
-
 window.onload = function () {
     myForm = document.querySelector("#myForm");
     fileSelector = document.querySelector("#fileSelector");
