@@ -49,6 +49,8 @@ function sendFormDataWithXhr2(url, data) {
     // POST is mandatory
 
     xhr.onload = function () {
+        $(".uploadedImg").remove();
+        
         console.log('Upload complete !');
 
     };
