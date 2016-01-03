@@ -7,18 +7,18 @@
         <title>Blog</title>
 
         <!-- CSS -->
-        <link href="resources/bootstrap-3.3.2-dist/css/bootstrap.min.css" rel="stylesheet">
-        <link href="resources/css/bootstrap-social.css" type="text/css" rel="stylesheet">
-        <link href="resources/css/blog.css" type="text/css" rel="stylesheet">
+        <link href="bootstrap.min.css" rel="stylesheet">
+        <link href="bootstrap-social.css" type="text/css" rel="stylesheet">
+        <link href="blog.css" type="text/css" rel="stylesheet">
 
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
         <link href="http://fonts.googleapis.com/css?family=Pacifico" rel="stylesheet" type="text/css">
 
         <!-- JS -->
-        <script type="text/javascript" src="resources/js/jquery.min.js" ></script>
-        <script type="text/javascript" src="resources/js/blog.js"></script>
+        <script type="text/javascript" src="jquery.min.js" ></script>
+        <script type="text/javascript" src="blog.js"></script>
         <script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false"></script>
-        <script type="text/javascript" src="resources/bootstrap-3.3.2-dist/js/bootstrap.min.js"></script>
+        <!-- <script type="text/javascript" src="resources/bootstrap-3.3.2-dist/js/bootstrap.min.js"></script> -->
 
     </head>
     <body>
@@ -30,10 +30,6 @@
                 <a class="navButton" href="#">My articles</a>
                 <a class="navButton" href="#">Profile</a>
             </nav>
-
-            <!--  <div class="action-dl">
-                <a id="dl-apk" class="btn btn-default btn-lg font-one" href="apk/Tintch.apk" download="Tintch.apk"><i class="fa fa-download fa-lg"></i> Download</a>
-            </div> -->
 
             <div id="social" class="div-social">
                 <a class="facebookBtn smGlobalBtn" href="#" ></a>
@@ -47,60 +43,81 @@
         </header>
 
         <section class="content">
+            
             <section class="section-head-title">
                 <h1 class="font-one">Blog <i class="fa fa-users"></i></h1>
                 <p class="font-one">Say it, share it</p>
-                <div class="action-new-msg">
+                <!-- <div class="action-new-msg">
                     <a class="btn btn-default btn-lg font-one" data-toggle="modal" data-target="#newPostModal"><i class="fa fa-download fa-lg"></i> New Post</a>
+                </div> -->
+            </section>
+            
+            <section class="text-center">
+                <div id="list-article"></div>
+            </section>
+            
+            <section>
+                <div id="update-article" class="modalbox">
+                    <h3>Modification d'un Article</h3>
+                    <form method="post" id="formupdate-article" onsubmit="return false;">
+                        <input type="hidden" id="id" name="id" />
+                        <p>
+                            <label for="titre">Titre</label>
+                            <input type="text" id="titre" name="titre"/>
+                        </p>
+                        <p>
+                            <label for="content">Texte</label>
+                            <textarea id="contenu" name="content"></textarea>
+                        </p>
+
+                        <p class="alignright">
+                            <a href="#" id="update" class="button blue">Sauvegarder les modifications</a>
+
+                            <a href="#" id="reset" class="button gray">Annuler</a>
+                        </p>
+                    </form>
+                    <div class="clearfix"></div>
+                </div>
+
+                <div id="write-article" class="modalbox">
+                    <h3>Ecrire un Article</h3>
+                    <form onsubmit="return sendForm();" id="myForm">
+                        <fieldset>
+                            <label for="titre">Titre</label><br/>
+                            <input type="text" id="titre" required name="titre">
+                            
+                            <br/>
+                            
+                            <label for="contenu">Contenu</label></br>
+                            <input type="text" id="contenu" required name="contenu">
+                            
+                            <ul id="media-list" class="media-list">
+                                <li>
+                                    <label for="fileSelector" title="Ajouter des images"><i class="fa fa-picture-o media-icon"></i></label>
+                                    <input id="fileSelector" class="hide" name="fileSelector" type="file" onchange="traiterFichier();" multiple/>
+                                </li>
+                                <li>
+                                    <i id="geolocate" onclick="geoloc();" class="fa fa-map-marker media-icon" title="Me geolocaliser"></i>
+                                </li>
+                            </ul>
+
+                            <br/>Progression de l'upload des fichiers: <progress value=0 id="progress"></progress>
+
+                            <div id="map-container">
+                                <div id="map"></div>
+                            </div>
+
+                            <p class="alignright">
+                                <button id="write" class="button blue">Publier</button>
+                            </p>
+                        <fieldset>
+                    </form>
+                    <div class="clearfix"></div>
                 </div>
             </section>
         </section>
 
         <!-- <section id="section-img-home"></section> -->
-
-        <div class="modal fade" id="newPostModal" tabindex="-1" role="dialog" aria-labelledby="createAlertModalLabel" aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                        <h4 class="modal-title">Nouveau message</h4>
-                    </div>
-                    <div class="modal-body">
-                        <div class="container form-group">
-                            <form method="post" id="myForm" onsubmit="return sendForm();">
-                                <fieldset>
-                                    <label for="titre">Titre : </label><br>
-                                    <input id="titre" name="titre" type="text" required><br>
-
-                                    <label for="content">Contenu : </label><br>
-                                    <textarea rows=10 id="content" name="contenu" required></textarea><br>
-
-                                    <div id="selector-button"></div>
-
-
-                                    <ul id="media-list" class="media-list">
-                                        <li>
-                                            <label for="fileSelector" title="Ajouter des images"><i class="fa fa-picture-o media-icon"></i></label>
-                                            <input id="fileSelector" class="hide" name="fileSelector" type="file" onchange="traiterFichier();" multiple/>
-                                        </li>
-                                        <li>
-                                            <i id="geolocate" onclick="geoloc();" class="fa fa-map-marker media-icon" title="Me geolocaliser"></i>
-                                        </li>
-                                    </ul>
-                                    <div id="map-container">
-                                        <div id="map"></div>
-                                    </div>
-
-                                    <p class="alignright">
-                                        <button id="write" class="button blue">Publier</button>
-                                    </p>
-                                </fieldset>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
 
         <div id="end-page"></div>
 
@@ -109,5 +126,8 @@
                     <br>Copyright © Blog 2015<br>
             </div>
         </footer>
+        
+        <script src="function.js"></script>
+        
     </body>
 </html>

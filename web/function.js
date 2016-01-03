@@ -24,8 +24,6 @@ jQuery(document).ready(function($){
                 i++
                 $("#list-article").prepend(renderItem(this.id, this.titre, this.content, this.time));
             });
-            if(i==0)
-                showWelcome();
         
             // Si on est venu ici après une suppression on supprime le lien
             // "load more"
@@ -213,10 +211,6 @@ jQuery(document).ready(function($){
             $("#article-"+id).css("background-color","white");
         }, 1000); 
 
-    }
-    
-    function showWelcome(){
-        $("#list-article").html("<div id='welcome'>Aucun article n'est présent.<br />Voulez-vous &ecirc;tre le premier ?</div>");
     }
 
 });
