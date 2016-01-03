@@ -35,7 +35,7 @@ jQuery(document).ready(function($){
                 // Si on vient ici après la publication d'un nouvel article on
                 // fait apparitre le bouton "load more"
                 console.log("INSERT");
-                $("<div id='loadmore'><a href='#' id='load' >J'en veux plus !</a></div>").insertAfter("#list-article");
+                $("<div id='loadmore'><a href='#' id='load' ><i class='fa fa-plus'></i></a></div>").insertAfter("#list-article");
             }
         }
     },"json");
@@ -160,7 +160,7 @@ jQuery(document).ready(function($){
             if(removeLoadMore()){
                 $("#loadmore").remove();
             }else{
-                $("<div id='loadmore'><a href='#' id='load' >J'en veux plus !</a></div>").insertAfter("#list-article");
+                $("<div id='loadmore'><a href='#' id='load' ><i class='fa fa-plus'></i></a></div>").insertAfter("#list-article");
             }
         },"json");
     });
@@ -186,10 +186,10 @@ jQuery(document).ready(function($){
         strDate += myDate.getUTCDate()+"/"+myDate.getMonth()+"/"+myDate.getFullYear();
         strDate += " à "+myDate.getHours()+":"+myDate.getMinutes();
         return "<div class='article' id='article-"+id+"'>\
-                <h2>"+titre+"</h2></a>\
-                <p class='content'>"+content+"</p>\
                 <div class='postmeta'>\n\
                     <p class='alignleft'>Article publi&eacute; le "+strDate+"</p>\n\
+                    <h2>"+titre+"</h2></a>\
+                    <p class='content'>"+content+"</p>\
                     <p class='alignright'>\n\
                         <a class='button blue delete' href='/BlogWS2015/resources/article/"+id+"'>Supprimer</a>\n\
                         <a href='/BlogWS2015/resources/article/"+id+"' class='button blue title'>Modifier</a>\

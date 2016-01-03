@@ -110,6 +110,8 @@ a:link
 
 .content {
 	min-height: 79%;
+        width: 500px;
+        margin: auto;
 }
 
 .websiteNavbar {
@@ -421,21 +423,20 @@ a:link
 
 /* list Article */
 .article{
-    background: url(img/post-sepa.gif) 0 bottom repeat-x!important;
     padding-bottom: 2px;
     margin-bottom: 30px;
+    border: 1px solid white;
+    border-radius: 10px;
 }
 .article h2{
     color: black;
     font: 2.8em/40px 'Lobster',Arial,sans-serif;
-    text-shadow: 0 1px 0 white;
     margin-bottom: 10px;
 }
 
 .postmeta{
-    background: url("img/meta-bg.jpg") repeat-x scroll 0 0 #4CADEB;
+    border-radius: 10px 10px 0px 0px;
     border-bottom: 1px solid #449CD6;
-    border-top: 1px solid #5BB4ED;
     color: #BDE4FD;
     display: block;
     margin-bottom: 40px;
@@ -501,4 +502,9 @@ a:link
 
 .hide {
 	display: none;
+}
+
+#loadmore {
+    text-align: center;
+    font-size: 40px;
 }

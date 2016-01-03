@@ -20,7 +20,7 @@ import org.glassfish.jersey.media.multipart.FormDataMultiPart;
 public class JerseyFileUpload {
 
     //private static final String SERVER_UPLOAD_LOCATION_FOLDER = "/Users/mbuffa/Desktop/";
-    private static final String SERVER_UPLOAD_LOCATION_FOLDER = "C:/Users/Nicolas/Documents/NetBeansProjects/ImgUploaded";
+    private static final String SERVER_UPLOAD_LOCATION_FOLDER = "C:/Users/Nicolas/Documents/NetBeansProjects/ImgUploaded/";
  
     /**
      * Upload a File
