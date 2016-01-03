@@ -56,7 +56,7 @@ function sendFormDataWithXhr2(url, data) {
     xhr.onerror = function () {
         console.log("erreur lors de l'envoi");
     }
-    
+
     xhr.upload.onprogress = function (e) {
         progress.value = e.loaded; // number of bytes uploaded
         progress.max = e.total;    // total number of bytes in the file
@@ -67,8 +67,8 @@ function sendFormDataWithXhr2(url, data) {
 }
 
 function traiterFichier(evt) {
-	
-	var files = event.target.files;
+
+    var files = event.target.files;
 
     for (var i = 0, f; f = files[i]; i++) {
 
@@ -84,11 +84,12 @@ function traiterFichier(evt) {
                 }
             }
         })
-        (f);
+                (f);
 
         reader.readAsDataURL(f);
     }
-};
+}
+;
 
 function geoloc() {
     console.log("Géolocalisation en cours...");

@@ -45,7 +45,7 @@ jQuery(document).ready(function($){
     
     // Si on clique sur le bouton "publier". L'utilisation de live() permet
     // de binder des events sur des éléments qui n'existent peut être pas encore
-    $("#write").live('click',function(){
+    $("#write").on('click',function(){
         // On récupère le contenu du formulaire en JSON
         var data = $("#myForm").serializeArray();
         // On fait un POST sur le web service d'insertion
@@ -70,7 +70,7 @@ jQuery(document).ready(function($){
 
 
     // Clic sur le bouton delete pour supprimer un article
-    $(".delete").live("click",function(){
+    $(".delete").on("click",function(){
 
         var id = $(this).attr("href");
         console.log(id);
@@ -94,7 +94,7 @@ jQuery(document).ready(function($){
     });
 
     // Click sur un titre d'article
-    $(".title").live("click",function(){
+    $(".title").on("click",function(){
         var url = $(this).attr("href");
 
         $(document).scrollTop($(document).height());
@@ -117,7 +117,7 @@ jQuery(document).ready(function($){
     });
 
     // Clic sur le bouton update pour modifier un article
-    $("#update").live("click",function(){
+    $("#update").on("click",function(){
 
         var data = $("#formupdate-article").serializeArray();
         console.log(data);
@@ -147,7 +147,7 @@ jQuery(document).ready(function($){
     });
 
     // clic sur le lien "load more"
-    $("#load").live("click",function(){
+    $("#load").on("click",function(){
         $("#loadmore").remove();
         var count = $("#list-article").children().length;
         var limit = count+5;

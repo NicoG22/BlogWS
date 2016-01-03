@@ -42,7 +42,7 @@ public class ArticleFacadeREST extends AbstractFacade<Article> {
     @Consumes({MediaType.APPLICATION_FORM_URLENCODED, "application/json", "application/xml"})
     public String create(MultivaluedMap<String, String> inFormParams) {
         System.out.println("DANS CREATE");
-        Article a = new Article(inFormParams.getFirst("titre"), inFormParams.getFirst("content"));
+        Article a = new Article(inFormParams.getFirst("titre"), inFormParams.getFirst("contenu"));
         super.create(a);
         return "/BlogWS2015/resources/article/" + a.getId();
     }

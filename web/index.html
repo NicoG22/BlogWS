@@ -81,7 +81,7 @@
 
                 <div id="write-article" class="modalbox">
                     <h3>Ecrire un Article</h3>
-                    <form onsubmit="return sendForm();" id="myForm">
+                    <form onsubmit="return sendForm();" method="POST" id="myForm">
                         <fieldset>
                             <label for="titre">Titre</label><br/>
                             <input type="text" id="titre" required name="titre">
@@ -110,7 +110,7 @@
                             <p class="alignright">
                                 <button id="write" class="button blue">Publier</button>
                             </p>
-                        <fieldset>
+                        </fieldset>
                     </form>
                     <div class="clearfix"></div>
                 </div>
