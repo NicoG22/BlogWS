@@ -20,8 +20,8 @@ import org.glassfish.jersey.media.multipart.FormDataMultiPart;
 public class JerseyFileUpload {
 
     //private static final String SERVER_UPLOAD_LOCATION_FOLDER = "/Users/mbuffa/Desktop/";
-    private static final String SERVER_UPLOAD_LOCATION_FOLDER = "D:\\Data\\Bibliotheques\\Documents\\Cours\\MBDS\\Web\\TP vacances\\BlogWS\\build\\web\\uploadImg";
-    private static final String URL_SERVER_LOCATION_FOLDER ="uploadImg/";
+    private static final String SERVER_UPLOAD_LOCATION_FOLDER = "C:\\Users\\Nicolas\\Documents\\img\\";
+    private static final String URL_SERVER_LOCATION_FOLDER ="../../img/";
     /**
      * Upload a File
      * @param form
@@ -44,22 +44,27 @@ public class JerseyFileUpload {
         
         // GETTING THE FILES
         List<FormDataBodyPart> files = form.getFields("file");
-        
-        System.out.println("J'ai récupéré et je sauvegarde les fichiers suivants : ");
 
-        for (FormDataBodyPart filePart : files) {
-            ContentDisposition headerOfFilePart = filePart.getContentDisposition();  
-            String filePath = SERVER_UPLOAD_LOCATION_FOLDER + headerOfFilePart.getFileName();
+        String output = "No file to load";
+                
+        if(files != null) {
+            System.out.println("J'ai récupéré et je sauvegarde les fichiers suivants : ");
             
-            InputStream fileInputStream = filePart.getValueAs(InputStream.class);
-             
-            System.out.println("Fichier : " + filePath);
-            
-            // Get the inputStream for the file and save it
-            saveFile(fileInputStream, filePath);
+            for (FormDataBodyPart filePart : files) {
+                ContentDisposition headerOfFilePart = filePart.getContentDisposition();  
+                String filePath = SERVER_UPLOAD_LOCATION_FOLDER + headerOfFilePart.getFileName();
+
+                InputStream fileInputStream = filePart.getValueAs(InputStream.class);
+
+                System.out.println("Fichier : " + filePath);
+
+                // Get the inputStream for the file and save it
+                saveFile(fileInputStream, filePath);
+            }
+
+            output = "Files saved to server location using FormDataMultiPart ! ";
         }
-
-        String output = "Files saved to server location using FormDataMultiPart ! ";
+        
 
         return Response.status(200).entity(output).build();
     }
