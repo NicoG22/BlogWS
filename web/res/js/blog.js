@@ -42,7 +42,7 @@ $( document ).ready(function() {
                 reader.onload = function(e2) { // finished reading file data.
                     
                     if ($.inArray(e2.target.result, filesUploaded) == -1) {
-                        $("<img class=\"uploadedImg\"src=\"" + e2.target.result + "\"/>").insertAfter("#media-list");
+                        $("<img class=\"uploadedImg miniature\"src=\"" + e2.target.result + "\"/>").insertAfter("#media-list");
                         filesUploaded.push(e2.target.result);
                         console.log("Le fichier vient d'être ajouté");
                     } else {
