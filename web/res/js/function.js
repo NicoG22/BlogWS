@@ -2,10 +2,6 @@ jQuery(document).ready(function ($) {
     // Ce code est appelée quand la page est chargée ou reloadée
     // On charge les 5 derniers articles (ou moins) depuis le web service
 
-    $('body a').click(function(event){
-        event.preventDefault();
-    });
-
     $("#map").hide();
 
     // On cache le bouton de sauvegarde des modifications pour chaque article
