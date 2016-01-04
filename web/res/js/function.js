@@ -2,6 +2,10 @@ jQuery(document).ready(function ($) {
     // Ce code est appelée quand la page est chargée ou reloadée
     // On charge les 5 derniers articles (ou moins) depuis le web service
 
+    $('body a').click(function(event){
+        event.preventDefault();
+    });
+
     $("#map").hide();
 
     // On cache le bouton de sauvegarde des modifications pour chaque article
@@ -46,6 +50,7 @@ jQuery(document).ready(function ($) {
     // Si on clique sur le bouton "publier". L'utilisation de live() permet
     // de binder des events sur des éléments qui n'existent peut être pas encore
     $("#write").on('click', function () {
+        
         // On récupère le contenu du formulaire en JSON
         var data = $("#myForm").serializeArray();
 
@@ -53,8 +58,7 @@ jQuery(document).ready(function ($) {
             name: "files",
             value: filesUploadedNames
         });
-
-        debugger;
+        
         // On fait un POST sur le web service d'insertion
         $.post("/BlogWS2015/resources/article", data, function (d) {
             $("#myForm").each(function () {
@@ -74,11 +78,10 @@ jQuery(document).ready(function ($) {
         }
 
     });
-
-
+    
     // Clic sur le bouton delete pour supprimer un article
-    $(".delete").on("click", function () {
-
+    $("#section-articles").on("click", "a.delete", function () {
+        
         var id = $(this).attr("href");
         console.log(id);
 
@@ -101,7 +104,8 @@ jQuery(document).ready(function ($) {
     });
 
     // Click sur un titre d'article
-    $(".title").on("click", function () {
+    $("#section-articles").on("click", "a.title", function () {
+        
         var url = $(this).attr("href");
 
         $(document).scrollTop($(document).height());
@@ -152,6 +156,13 @@ jQuery(document).ready(function ($) {
         }
 
     });
+    
+    // Clic sur le bouton annuler de la modification d'un article
+    $("#reset").on("click", function () {
+
+        $("#update-article").hide();
+        $("#write-article").show();
+    });
 
     // clic sur le lien "load more"
     $("#load").on("click", function () {
@@ -201,7 +212,7 @@ jQuery(document).ready(function ($) {
                     <p class='content'>" + content + "</p>\
                     <p class='alignright'>\n\
                         <a class='button blue delete' href='/BlogWS2015/resources/article/" + id + "'>Supprimer</a>\n\
-                        <a href='/BlogWS2015/resources/article/" + id + "' class='button blue title'>Modifier</a>\
+                        <a class='button blue title' href='/BlogWS2015/resources/article/" + id + "'>Modifier</a>\
                     </p></div>\n\
                     <div class='clearfix'></div>\
                 </div>";
