@@ -5,8 +5,17 @@
 package service;
 
 import entity.Article;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.util.Base64;
+import java.util.Base64.Encoder;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.ejb.Stateless;
+import javax.json.Json;
+import javax.json.JsonObjectBuilder;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
@@ -20,6 +29,7 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.MultivaluedMap;
+import javax.ws.rs.core.Response;
 
 /**
  *
@@ -76,6 +86,35 @@ public class ArticleFacadeREST extends AbstractFacade<Article> {
     @Produces({"application/json"})
     public Article find(@PathParam("id") Long id) {
         return super.find(id);
+    }
+
+    @GET
+    @Path("{id}/images")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getImages(@PathParam("id") Long id) {
+        Article a = find(id);
+        JsonObjectBuilder builder = Json.createObjectBuilder();
+
+        for (String s : a.getImages()) {
+            try {
+                File f = new File(JerseyFileUpload.SERVER_UPLOAD_LOCATION_FOLDER + s);
+
+                byte[] imageData;
+                try (FileInputStream image = new FileInputStream(f)) {
+                    imageData = new byte[(int) f.length()];
+                    image.read(imageData);
+                }
+
+                Encoder encoder = Base64.getEncoder();
+                String content = encoder.encodeToString(imageData);
+
+                builder.add(s, content);
+            } catch (IOException ex) {
+                Logger.getLogger(ArticleFacadeREST.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+
+        return Response.ok(builder.build()).build();
     }
 
     @GET

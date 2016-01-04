@@ -1,12 +1,10 @@
 jQuery(document).ready(function ($) {
-    // Ce code est appelée quand la page est chargée ou reloadée
-    // On charge les 5 derniers articles (ou moins) depuis le web service
+// Ce code est appelée quand la page est chargée ou reloadée
+// On charge les 5 derniers articles (ou moins) depuis le web service
 
     $("#map").hide();
-
     // On cache le bouton de sauvegarde des modifications pour chaque article
     $("#update-article").hide();
-
     // URL du WS et fonction de callback en cas de succ-s
     $.get("/BlogWS2015/resources/article/0/5", function (data) {
 
@@ -24,9 +22,8 @@ jQuery(document).ready(function ($) {
             // ]        // CAS 2 : plusieurs articles
             $(data).each(function () {
                 i++
-                $("#list-article").prepend(renderItem(this.id, this.titre, this.content, this.time));
+                $("#list-article").prepend(renderItem(this.id, this.titre, this.content, this.time, this.images));
             });
-
             // Si on est venu ici après une suppression on supprime le lien
             // "load more"
             if (removeLoadMore()) {
@@ -41,20 +38,15 @@ jQuery(document).ready(function ($) {
             }
         }
     }, "json");
-
-
     // Si on clique sur le bouton "publier". L'utilisation de live() permet
     // de binder des events sur des éléments qui n'existent peut être pas encore
     $("#write").on('click', function () {
-        
-        // On récupère le contenu du formulaire en JSON
+// On récupère le contenu du formulaire en JSON
         var data = $("#myForm").serializeArray();
-
         data.push({
             name: "files",
             value: filesUploadedNames
         });
-        
         // On fait un POST sur le web service d'insertion
         $.post("/BlogWS2015/resources/article", data, function (d) {
             $("#myForm").each(function () {
@@ -62,25 +54,21 @@ jQuery(document).ready(function ($) {
             });
             // On ajoute l'article dans la page
             $.get(d, function (data) {
-                $("#list-article").prepend(renderItem(data.id, data.titre, data.content, data.time));
+                $("#list-article").prepend(renderItem(data.id, data.titre, data.content, data.time, data.images));
             });
         });
-
         // Il y a au moins un article, on supprime le message de bienvenue
         $("#welcome").remove();
-
         if (removeLoadMore()) {
             $("#loadmore").remove();
         }
 
     });
-    
     // Clic sur le bouton delete pour supprimer un article
-    $("#section-articles").on("click", "a.delete", function () {
-        
+    $(".delete").on("click", function () {
+
         var id = $(this).attr("href");
         console.log(id);
-
         $.ajax(id,
                 {
                     type: "DELETE",
@@ -90,45 +78,35 @@ jQuery(document).ready(function ($) {
                         });
                     }
                 });
-
         if (removeLoadMore()) {
             $("#loadmore").remove();
         }
 
         return false;
-
     });
-
     // Click sur un titre d'article
-    $("#section-articles").on("click", "a.title", function () {
-        
+    $(".title").on("click", function () {
         var url = $(this).attr("href");
-
         $(document).scrollTop($(document).height());
-
         $.get(url, function (data) {
 
             $("#formupdate-article #titre").val(data.titre);
             $("#formupdate-article #content").val(data.content);
             $("#formupdate-article #id").val(data.id);
-
             $("#write-article").hide();
             $("#update-article").show();
         });
-
         if (removeLoadMore()) {
             $("#loadmore").remove();
         }
 
         return false;
     });
-
     // Clic sur le bouton update pour modifier un article
     $("#update").on("click", function () {
 
         var data = $("#formupdate-article").serializeArray();
         console.log(data);
-
         $.ajax({
             url: "/BlogWS2015/resources/article",
             type: "PUT",
@@ -137,41 +115,28 @@ jQuery(document).ready(function ($) {
                 $("#formupdate-article").each(function () {
                     this.reset();
                 });
-
                 updateRenderedItem(d.id, d.titre, d.content, d.time)
 
                 $("#update-article").hide();
                 $("#write-article").show();
-
             }
 
         });
-
         if (removeLoadMore()) {
             $("#loadmore").remove();
         }
 
     });
-    
-    // Clic sur le bouton annuler de la modification d'un article
-    $("#reset").on("click", function () {
-
-        $("#update-article").hide();
-        $("#write-article").show();
-    });
-
     // clic sur le lien "load more"
     $("#load").on("click", function () {
         $("#loadmore").remove();
         var count = $("#list-article").children().length;
         var limit = count + 5;
-
         $.get("/BlogWS2015/resources/article/" + count + "/" + limit, function (data) {
 
 
             $(data).each(function () {
-
-                $("#list-article").append(renderItem(this.id, this.titre, this.content, this.time));
+                $("#list-article").append(renderItem(this.id, this.titre, this.content, this.time, this.images));
             });
             if (removeLoadMore()) {
                 $("#loadmore").remove();
@@ -180,8 +145,6 @@ jQuery(document).ready(function ($) {
             }
         }, "json");
     });
-
-
     function removeLoadMore()
     {
         $.get("/BlogWS2015/resources/article/count", function (data) {
@@ -194,39 +157,52 @@ jQuery(document).ready(function ($) {
         });
     }
 
-    // creation et ajout d'un article dans la page
-    function renderItem(id, titre, content, date)
+// creation et ajout d'un article dans la page
+    function renderItem(id, titre, content, date, imgs)
     {
         var myDate = new Date(date);
         var strDate = "";
+        var images = "";
         strDate += myDate.getUTCDate() + "/" + myDate.getMonth() + "/" + myDate.getFullYear();
         strDate += " à " + myDate.getHours() + ":" + myDate.getMinutes();
-        return "<div class='article' id='article-" + id + "'>\
-                <div class='postmeta'>\n\
-                    <p class='alignleft'>Article publi&eacute; le " + strDate + "</p>\n\
-                    <h2>" + titre + "</h2></a>\
-                    <p class='content'>" + content + "</p>\
-                    <p class='alignright'>\n\
-                        <a class='button blue delete' href='/BlogWS2015/resources/article/" + id + "'>Supprimer</a>\n\
-                        <a class='button blue title' href='/BlogWS2015/resources/article/" + id + "'>Modifier</a>\
-                    </p></div>\n\
-                    <div class='clearfix'></div>\
-                </div>";
+        $.get("/BlogWS2015/resources/article/" + id + "/images", function (data) {
+
+            var summary = "<details>\n\
+                            <summary>Voir les images\n\</summary>";
+
+            for (var i = 0; i < imgs.length; i++) {
+                var fileExt = imgs[i].substring(imgs[i].lastIndexOf("."));
+                summary += "<img src=\"data:image/" + fileExt + ";base64," + data[imgs[i]] + "\" class=\"miniature\" alt=\"" + imgs[i] + "\"/>";
+
+            }
+            summary += "</details>";
+
+            $(summary).insertAfter("#article-" + id + " p.content");
+        });
+
+        return "<article class='article' id='article-" + id + "'>\
+        <div class='postmeta'>\n\
+            <p class='alignleft'>Article publi&eacute; le " + strDate + "</p>\n\
+            <h2>" + titre + "</h2></a>\
+            <p class='content'>" + content + "</p>\
+            <p class='alignright'>\n\
+                <a class='button blue delete' href='/BlogWS2015/resources/article/" + id + "'>Supprimer</a>\n\
+                <a href='/BlogWS2015/resources/article/" + id + "' class='button blue title'>Modifier</a>\
+            </p></div>\n\
+            <div class='clearfix'></div>\
+        </article>";
     }
 
     function updateRenderedItem(id, titre, content)
     {
         console.log(id);
-
         $("#article-" + id + " h2").html(titre);
         $("#article-" + id + " .title").attr("rel", "/BlogWS2015/resources/article/" + id);
         $("#article-" + id + " .content").html(content);
-
         $("#article-" + id).css("background-color", "#E3F6CE");
         window.setTimeout(function () {
             $("#article-" + id).css("background-color", "white");
         }, 1000);
-
     }
 
 });

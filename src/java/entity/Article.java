@@ -24,30 +24,32 @@ import javax.xml.bind.annotation.XmlRootElement;
 @Entity
 @XmlRootElement
 public class Article implements Serializable {
+
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    
+
     private String titre;
     // Par defaut les String deviennent des VARCHAR(255), on augmente cette taille.
     // Si vraiment on ne veut pas de limite, on mettra @Lob pour Large Object à la 
     // place. Cf tutorial sur JPA et le mapping
-    @Column(length=2000)
+    @Column(length = 2000)
     private String content;
     // TIMESTAMP, contrairement à DATE, stocke l'heure en plus du jour/mois/année
     @Temporal(javax.persistence.TemporalType.TIMESTAMP)
     private Date time;
-    
+
     @ElementCollection
     private List<String> images;
 
-    /******* Constructeur *******/
-    
-    public Article() {}
-    
-    public Article(String titre, String content)
-    {
+    /**
+     * ***** Constructeur ******
+     */
+    public Article() {
+    }
+
+    public Article(String titre, String content) {
         this.content = content;
         this.titre = titre;
         //DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
@@ -55,9 +57,10 @@ public class Article implements Serializable {
         this.time = new Date();
         this.images = new ArrayList();
     }
-    
-    /******************/
-    
+
+    /**
+     * ***************
+     */
     public void addImage(String nom) {
         this.images.add(nom);
     }
@@ -69,7 +72,7 @@ public class Article implements Serializable {
     public void setImages(List<String> images) {
         this.images = images;
     }
-    
+
     public String getContent() {
         return content;
     }
@@ -93,9 +96,6 @@ public class Article implements Serializable {
     public void setTitre(String titre) {
         this.titre = titre;
     }
-    
-    
-    
 
     public Long getId() {
         return id;
@@ -130,6 +130,4 @@ public class Article implements Serializable {
         return "Article{" + "id=" + id + ", titre=" + titre + ", content=" + content + ", time=" + time + '}';
     }
 
-    
-    
 }

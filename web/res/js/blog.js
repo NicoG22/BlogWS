@@ -82,7 +82,10 @@ function sendForm() {
     }
 
     sendFormDataWithXhr2(url, data);
-
+    
+    filesUploaded = [];
+    filesUploadedNames = [];
+    
     return false;
 }
 
@@ -94,7 +97,7 @@ function sendFormDataWithXhr2(url, data) {
 
     xhr.onload = function () {
         $(".uploadedImg").remove();
-        
+
         console.log('Upload complete !');
 
     };
@@ -122,7 +125,7 @@ function traiterFichier(evt) {
         reader.onload = (function (file) {
             return function (e) {
                 if ($.inArray(e.target.result, filesUploaded) == -1) {
-                    $("<img class=\"uploadedImg\"src=\"" + e.target.result + "\"/>").insertAfter("#media-list");
+                    $("<img class=\"uploadedImg miniature\"src=\"" + e.target.result + "\"/>").insertAfter("#media-list");
                     filesUploaded.push(e.target.result);
                     filesUploadedNames.push(file.name);
 
