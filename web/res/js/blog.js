@@ -8,6 +8,7 @@ var myForm, fileSelector, progress;
 var url = "/BlogWS2015/resources/files/upload";
 var position;
 var filesUploaded = [];
+var filesUploadedNames = [];
 
 $(document).ready(function () {
     $("#map").hide();
@@ -80,6 +81,8 @@ function traiterFichier(evt) {
                 if ($.inArray(e.target.result, filesUploaded) == -1) {
                     $("<img class=\"uploadedImg\"src=\"" + e.target.result + "\"/>").insertAfter("#media-list");
                     filesUploaded.push(e.target.result);
+                    filesUploadedNames.push(file.name);
+
                     console.log("Le fichier vient d'être ajouté");
                 } else {
                     console.log("Le fichier a déjà  été choisi");

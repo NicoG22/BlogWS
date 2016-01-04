@@ -7,7 +7,9 @@ package entity;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import javax.persistence.Column;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -37,7 +39,8 @@ public class Article implements Serializable {
     @Temporal(javax.persistence.TemporalType.TIMESTAMP)
     private Date time;
     
-    private ArrayList<String> images;
+    @ElementCollection
+    private List<String> images;
 
     /******* Constructeur *******/
     
@@ -55,12 +58,16 @@ public class Article implements Serializable {
     
     /******************/
     
-    public void AjouterImage(String nom) {
+    public void addImage(String nom) {
         this.images.add(nom);
     }
 
-    public ArrayList<String> getImages() {
+    public List<String> getImages() {
         return images;
+    }
+
+    public void setImages(List<String> images) {
+        this.images = images;
     }
     
     public String getContent() {

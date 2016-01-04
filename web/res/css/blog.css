@@ -166,7 +166,7 @@ a:link
    width:35%;
    position:absolute;
    top:0; /* on part du haut... */
-   right:0px; /* ...et on fait sortir l'�l�ment du conteneur en lui donnant une position n�gative */
+   right:0px; /* ...et on fait sortir l'?l?ment du conteneur en lui donnant une position n?gative */
 }
 
 
@@ -427,6 +427,7 @@ a:link
     margin-bottom: 30px;
     border: 1px solid white;
     border-radius: 10px;
+    background: linear-gradient(to bottom,  #f3e2c7 0%,#c19e67  100%); 
 }
 .article h2{
     color: black;
