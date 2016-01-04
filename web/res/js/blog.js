@@ -14,46 +14,49 @@ $(document).ready(function () {
     $("#map").hide();
 })
 
-$( document ).ready(function() {
-    
+$(document).ready(function () {
+
     var dropZone = document.getElementById('dropZone');
 
     // Optional.   Show the copy icon when dragging over.  Seems to only work for chrome.
-    dropZone.addEventListener('dragover', function(e) {
+    dropZone.addEventListener('dragover', function (e) {
         e.stopPropagation();
         e.preventDefault();
         e.dataTransfer.dropEffect = 'copy';
-        
-        $("#dropZone").css({"border-style":"solid"});
+
+        $("#dropZone").css({"border-style": "solid"});
     });
-    
-    dropZone.addEventListener('dragleave', function(e) {
-        $("#dropZone").css({"border-style":"dashed"});
+
+    dropZone.addEventListener('dragleave', function (e) {
+        $("#dropZone").css({"border-style": "dashed"});
     });
 
     // Get file data on drop
-    dropZone.addEventListener('drop', function(e) {
+    dropZone.addEventListener('drop', function (e) {
         e.stopPropagation();
         e.preventDefault();
         var files = e.dataTransfer.files; // Array of all files
-        for (var i=0, file; file=files[i]; i++) {
-            if (file.type.match(/image.*/)) {
+        for (var i = 0, f; f = files[i]; i++) {
+            if (f.type.match(/image.*/)) {
                 var reader = new FileReader();
-                reader.onload = function(e2) { // finished reading file data.
-                    
-                    if ($.inArray(e2.target.result, filesUploaded) == -1) {
-                        $("<img class=\"uploadedImg miniature\"src=\"" + e2.target.result + "\"/>").insertAfter("#media-list");
-                        filesUploaded.push(e2.target.result);
-                        console.log("Le fichier vient d'être ajouté");
-                    } else {
-                        console.log("Le fichier a déjà  été choisi");
+                reader.onload = (function (file) {
+                    return function (e) { // finished reading file data.
+
+                        if ($.inArray(e.target.result, filesUploaded) == -1) {
+                            $("<img class=\"uploadedImg miniature\"src=\"" + e.target.result + "\"/>").insertAfter("#media-list");
+                            filesUploaded.push(e.target.result);
+                            filesUploadedNames.push(file.name);
+                            console.log("Le fichier vient d'être ajouté");
+                        } else {
+                            console.log("Le fichier a déjà  été choisi");
+                        }
                     }
-                }
-                reader.readAsDataURL(file); // start reading the file data.
-            }   
-        }   
-        
-        $("#dropZone").css({"border-style":"dashed"});
+                })(f);
+                reader.readAsDataURL(f); // start reading the file data.
+            }
+        }
+
+        $("#dropZone").css({"border-style": "dashed"});
     });
 });
 
@@ -82,10 +85,10 @@ function sendForm() {
     }
 
     sendFormDataWithXhr2(url, data);
-    
+
     filesUploaded = [];
     filesUploadedNames = [];
-    
+
     return false;
 }
 
