@@ -38,10 +38,11 @@ jQuery(document).ready(function ($) {
             }
         }
     }, "json");
+    
     // Si on clique sur le bouton "publier". L'utilisation de live() permet
     // de binder des events sur des éléments qui n'existent peut être pas encore
     $("#write").on('click', function () {
-// On récupère le contenu du formulaire en JSON
+        // On récupère le contenu du formulaire en JSON
         var data = $("#myForm").serializeArray();
         data.push({
             name: "files",
@@ -65,7 +66,7 @@ jQuery(document).ready(function ($) {
 
     });
     // Clic sur le bouton delete pour supprimer un article
-    $(".delete").on("click", function () {
+     $("#section-articles").on("click", "a.delete", function () {
 
         var id = $(this).attr("href");
         console.log(id);
@@ -84,8 +85,9 @@ jQuery(document).ready(function ($) {
 
         return false;
     });
+    
     // Click sur un titre d'article
-    $(".title").on("click", function () {
+    $("#section-articles").on("click", "a.title", function () {
         var url = $(this).attr("href");
         $(document).scrollTop($(document).height());
         $.get(url, function (data) {
@@ -102,6 +104,14 @@ jQuery(document).ready(function ($) {
 
         return false;
     });
+    
+    // Clic sur le bouton annuler de la modification d'un article
+    $("#reset").on("click", function () {
+
+        $("#update-article").hide();
+        $("#write-article").show();
+    });
+    
     // Clic sur le bouton update pour modifier un article
     $("#update").on("click", function () {
 
