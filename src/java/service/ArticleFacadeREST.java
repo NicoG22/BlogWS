@@ -92,6 +92,8 @@ public class ArticleFacadeREST extends AbstractFacade<Article> {
     @Path("{id}/images")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getImages(@PathParam("id") Long id) {
+        //Tout sauf efficient, il aurait suffit d'envoyer les chemins des images
+        
         Article a = find(id);
         JsonObjectBuilder builder = Json.createObjectBuilder();
 
