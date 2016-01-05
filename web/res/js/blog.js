@@ -16,6 +16,7 @@ $(document).ready(function () {
 
 $(document).ready(function () {
 
+    //DRAG'N DROP
     var dropZone = document.getElementById('dropZone');
 
     // Optional.   Show the copy icon when dragging over.  Seems to only work for chrome.
@@ -39,6 +40,10 @@ $(document).ready(function () {
         for (var i = 0, f; f = files[i]; i++) {
             if (f.type.match(/image.*/)) {
                 var reader = new FileReader();
+                
+                //PREVIEW DES IMAGES (code doublon, 
+                //déjà présent à la fin de ce fichier pour faire une preview
+                //des images sélectionnées via le <input type=file>
                 reader.onload = (function (file) {
                     return function (e) { // finished reading file data.
 
@@ -86,7 +91,9 @@ function sendForm() {
 
     sendFormDataWithXhr2(url, data);
 
+    //Tableau contenant les données des images en data url, pour la preview
     filesUploaded = [];
+    //Tableau contenant les noms des fichiers (sera envoyé à ArticleFacadeREST)
     filesUploadedNames = [];
 
     return false;
@@ -99,6 +106,7 @@ function sendFormDataWithXhr2(url, data) {
     // POST is mandatory
 
     xhr.onload = function () {
+        //Suppression des miniatures
         $(".uploadedImg").remove();
 
         console.log('Upload complete !');
@@ -124,6 +132,7 @@ function traiterFichier(evt) {
 
     for (var i = 0, f; f = files[i]; i++) {
 
+        //Code doublon (voir au début du fichier)
         var reader = new FileReader();
         reader.onload = (function (file) {
             return function (e) {

@@ -38,7 +38,7 @@ jQuery(document).ready(function ($) {
             }
         }
     }, "json");
-    
+
     // Si on clique sur le bouton "publier". L'utilisation de live() permet
     // de binder des events sur des éléments qui n'existent peut être pas encore
     $("#write").on('click', function () {
@@ -66,7 +66,7 @@ jQuery(document).ready(function ($) {
 
     });
     // Clic sur le bouton delete pour supprimer un article
-     $("#section-articles").on("click", "a.delete", function () {
+    $("#section-articles").on("click", "a.delete", function () {
 
         var id = $(this).attr("href");
         console.log(id);
@@ -85,7 +85,7 @@ jQuery(document).ready(function ($) {
 
         return false;
     });
-    
+
     // Click sur un titre d'article
     $("#section-articles").on("click", "a.title", function () {
         var url = $(this).attr("href");
@@ -104,14 +104,14 @@ jQuery(document).ready(function ($) {
 
         return false;
     });
-    
+
     // Clic sur le bouton annuler de la modification d'un article
     $("#reset").on("click", function () {
 
         $("#update-article").hide();
         $("#write-article").show();
     });
-    
+
     // Clic sur le bouton update pour modifier un article
     $("#update").on("click", function () {
 
@@ -144,7 +144,6 @@ jQuery(document).ready(function ($) {
         var limit = count + 5;
         $.get("/BlogWS2015/resources/article/" + count + "/" + limit, function (data) {
 
-
             $(data).each(function () {
                 $("#list-article").append(renderItem(this.id, this.titre, this.content, this.time, this.images));
             });
@@ -176,6 +175,8 @@ jQuery(document).ready(function ($) {
         strDate += myDate.getUTCDate() + "/" + myDate.getMonth() + "/" + myDate.getFullYear();
         strDate += " à " + myDate.getHours() + ":" + myDate.getMinutes();
         $.get("/BlogWS2015/resources/article/" + id + "/images", function (data) {
+
+        //Affichage des images récupérées
 
             var summary = "<details>\n\
                             <summary>Voir les images\n\</summary>";
